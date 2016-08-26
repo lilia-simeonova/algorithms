@@ -114,7 +114,7 @@ class Graph {
 	constructor(){
 		this.graph =  new Array();
 	}
-	push(Adjusted) {
+	insert(Adjusted) {
 		this.graph.push(Adjusted);
 	}
 	print() {
@@ -156,26 +156,54 @@ class Graph {
 			}
 		}
 	}
+	pathStack(node1, node2) {
+		var n1 = new Node(node1);
+		var n2 = new Node(node2);
+		var haveNext = false;
+		var stack = new Array();
+		stack.push(n1);
+		var temp;
+		while(stack.length != 0) {
+			temp = stack.pop();
+			for(var i = 0; i < this.graph.length; i++) {
+				if(this.graph[i].head.data === temp.data) {
+					var current = this.graph[i].head;
+					while (current) {
+						if(current.data === n2.data) {
+							return console.log('true'); 
+						} else if(current.data === n1.data) {
+							current = current.next;
+						} else {
+							stack.push(current);
+							current = current.next;
+						}
+					}
+				}
+			}	
+		}
+	}
 }
 
 var ad0 = new Adjusted(0);
 var ad1 = new Adjusted(1);
 var ad2 = new Adjusted(2);
 var ad3 = new Adjusted(3);
+var ad4 = new Adjusted(4);
 ad0.insert(1);
+ad0.insert(2);
 
 ad1.insert(2);
 
 ad2.insert(3);
 
-ad3.insert(1);
+ad3.insert(4);
 
 
 var g = new Graph();
-g.push(ad0);
-g.push(ad1);
-g.push(ad2);
-g.push(ad3);
+g.insert(ad0);
+g.insert(ad1);
+g.insert(ad2);
+g.insert(ad3);
 
 //g.print();
-g.path(1,0);
+g.pathStack(3,1);
