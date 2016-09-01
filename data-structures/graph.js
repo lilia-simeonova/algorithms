@@ -144,6 +144,7 @@ class Graph {
 		var n2 = new Node(node2);
 		for(var i = 0; i < this.graph.length; i++) {
 			if(this.graph[i].head.data === n1.data) {
+
 				if(this.graph[i].exist(n2.data)) {
 					console.log(this.graph[i].exist(n2.data)); break;
 				} else {
@@ -165,6 +166,32 @@ class Graph {
 		var temp;
 		while(stack.length != 0) {
 			temp = stack.pop();
+			for(var i = 0; i < this.graph.length; i++) {
+				if(this.graph[i].head.data === temp.data) {
+					var current = this.graph[i].head;
+					while (current) {
+						if(current.data === n2.data) {
+							return console.log('true'); 
+						} else if(current.data === n1.data) {
+							current = current.next;
+						} else {
+							stack.push(current);
+							current = current.next;
+						}
+					}
+				}
+			}	
+		}
+	}
+	pathBFS(node1, node2) {
+		var n1 = new Node(node1);
+		var n2 = new Node(node2);
+		var haveNext = false;
+		var stack = new Array();
+		stack.push(n1);
+		var temp;
+		while(stack.length != 0) {
+			temp = stack.shift();
 			for(var i = 0; i < this.graph.length; i++) {
 				if(this.graph[i].head.data === temp.data) {
 					var current = this.graph[i].head;
@@ -206,4 +233,4 @@ g.insert(ad2);
 g.insert(ad3);
 
 //g.print();
-g.pathStack(3,1);
+g.path(1,3);
